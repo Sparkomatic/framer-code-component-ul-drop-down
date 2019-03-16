@@ -23,6 +23,7 @@ interface Props {
   backgroundImage: string;
   width: number;
   height: number;
+  // ddIconRotation: number;
 }
 
 interface State {
@@ -45,8 +46,7 @@ export class ul_drop_down extends React.Component<Props, State> {
     iconColor: "red",
     iconSize: 0.7,
     iconTop: 2,
-    // bgColor: "#FFF",
-    bgColor: "yellow",
+    bgColor: "black",
     // selectedOption: location[0]
   };
 
@@ -138,14 +138,12 @@ export class ul_drop_down extends React.Component<Props, State> {
       return selected[0].title;
     }
     else {
-      return "Choose something"
+      return "Choose..."
     }
   }
 
   StyledDropdown = styled("div")`
   position: relative;
-  width: 100%;
-  /* height: 100%; */
   height: auto;
   min-height: 100% !important;
   display: flex;
@@ -153,82 +151,94 @@ export class ul_drop_down extends React.Component<Props, State> {
   justify-content: left;
   border-radius: 2px;
   border: solid 1px #DEDEDE;
-  padding-left: 1rem;
   color: #212b38;
-  background-repeat: no-repeat, repeat;
-  /* margin: 20px 10px; */
+  background-color: purple;
   font-size: 16px;
+  .dd-wrapper {
+    width: 100%;
+  }
   select {
     border: 1px solid #000;
   }
   .dd-header {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  line-height: 38px;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+
   border: 1px solid #dfdfdf;
   border-radius: 3px;
   cursor: default;
   position: relative;
-  background-color: #fff;
+  background-color: yellow;
+  padding: 16px;
 }
   .dd-header span {
   margin-right: 20px;
 }
   .dd-header-title {
   font-weight: 300;
-  margin: 2px 20px;
-  /* margin-right: 30px; */
-  margin-right: 8px;
 }
 .dd-list {
   z-index: 10;
-  position: absolute;
-  width: 100%;
+  height: auto;
+  min-height: 100% !important;
   border: 1px solid #dfdfdf;
   border-top: none;
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
   background-color: #fff;
   -webkit-box-shadow: 0 2px 5px -1px #e8e8e8;
-          box-shadow: 0 2px 5px -1px #e8e8e8;
+  box-shadow: 0 2px 5px -1px #e8e8e8;
   font-weight: 700;
-  padding: 15px 0;
-  max-height: 215px;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+  list-style: none;
+  padding: 16px;
+  margin: 0 auto;
 }
   .dd-list-item {
     font-size: 16px;
+    line-height: 24px;
+    margin: 8px auto;
     &:hover {
       background: blue;
     }
   }
 `;
 
+StyledIcon = styled("div")`
+width: 30px;
+height: 30px;
+transition: 0.2s;
+background-position: center; 
+background-repeat:no-repeat;
+background-size: 100% 100%;
+`
+
   render() {
 
     return (
       <this.StyledDropdown
         style={{
-          backgroundColor: this.props.bgColor,
-          backgroundImage: "url('data:image/svg+xml,%3Csvg%20width%3D%2214%22%20height%3D%228%22%20viewBox%3D%220%200%2014%208%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20d%3D%22M1%201L7%207L13%201%22%20stroke%3D%22" + this.props.iconColor + "%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3C%2Fsvg%3E%0A'), linear-gradient(to bottom, " + this.props.bgColor + " 0%, " + this.props.bgColor + " 100%)",
-          backgroundPosition: "right calc(" + this.props.padding + "px + " + this.props.iconSize * .3 + "em) top " + this.props.height/2 + "px, 0 0",
-          backgroundSize: this.props.iconSize + "em auto, 100%",
+          width: this.props.width,
         }}
       >
         <div className="dd-wrapper">
           <div className="dd-header" onClick={() => this.toggleList()}>  
               <div className="dd-header-title" >{this.getSelectedItem('location')}
-              <div className="dd-icon">
+
               </div>
-              </div>
+              <this.StyledIcon
+                style={{
+                  backgroundImage: "url('data:image/svg+xml,%3Csvg%20width%3D%2214%22%20height%3D%228%22%20viewBox%3D%220%200%2014%208%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20d%3D%22M1%201L7%207L13%201%22%20stroke%3D%22" + this.props.iconColor + "%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%0A%3C%2Fsvg%3E%0A')",
+                  transform: this.state.listOpen ? "rotate(180deg)" : "rotate(0deg)",
+                }}
+                >
+                </this.StyledIcon>
           </div>
           {this.state.listOpen && 
           <ul className="dd-list">
@@ -247,4 +257,3 @@ export class ul_drop_down extends React.Component<Props, State> {
     );
   }
 }
-

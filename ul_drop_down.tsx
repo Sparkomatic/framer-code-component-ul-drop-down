@@ -144,17 +144,20 @@ export class ul_drop_down extends React.Component<Props, State> {
 
   StyledDropdown = styled("div")`
   position: relative;
-  height: auto;
+  /* height: auto; */
+  height: 48px;
   min-height: 100% !important;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: left;
   border-radius: 2px;
   border: solid 1px #DEDEDE;
   color: #212b38;
   background-color: purple;
   font-size: 16px;
+
   .dd-wrapper {
+
     width: 100%;
   }
   select {
@@ -174,7 +177,8 @@ export class ul_drop_down extends React.Component<Props, State> {
   cursor: default;
   position: relative;
   background-color: yellow;
-  padding: 16px;
+  height: 100%;
+  padding: 0 16px;
 }
   .dd-header span {
   margin-right: 20px;
@@ -187,7 +191,7 @@ export class ul_drop_down extends React.Component<Props, State> {
   height: auto;
   min-height: 100% !important;
   border: 1px solid #dfdfdf;
-  border-top: none;
+  /* border-top: none; */
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
   background-color: #fff;
@@ -211,8 +215,8 @@ export class ul_drop_down extends React.Component<Props, State> {
 `;
 
 StyledIcon = styled("div")`
-width: 30px;
-height: 30px;
+width: 20px;
+height: 20px;
 transition: 0.2s;
 background-position: center; 
 background-repeat:no-repeat;

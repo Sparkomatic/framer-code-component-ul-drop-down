@@ -43,10 +43,10 @@ export class ul_drop_down extends React.Component<Props, State> {
     paddingLeft: 16,
     width: 220,
     height: 48,
-    iconColor: "red",
+    iconColor: "#dfdfdf",
     iconSize: 0.7,
     iconTop: 2,
-    bgColor: "black",
+    // bgColor: "black",
     // selectedOption: location[0]
   };
 
@@ -153,11 +153,9 @@ export class ul_drop_down extends React.Component<Props, State> {
   border-radius: 2px;
   border: solid 1px #DEDEDE;
   color: #212b38;
-  background-color: purple;
   font-size: 16px;
 
   .dd-wrapper {
-
     width: 100%;
   }
   select {
@@ -176,7 +174,7 @@ export class ul_drop_down extends React.Component<Props, State> {
   border-radius: 3px;
   cursor: default;
   position: relative;
-  background-color: yellow;
+  background-color: white;
   height: 100%;
   padding: 0 16px;
 }
@@ -201,15 +199,17 @@ export class ul_drop_down extends React.Component<Props, State> {
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   list-style: none;
-  padding: 16px;
+  padding: 16px 0;
   margin: 0 auto;
+  transition: 0.2s;
 }
   .dd-list-item {
     font-size: 16px;
     line-height: 24px;
+    padding: 0 16px;
     margin: 8px auto;
     &:hover {
-      background: blue;
+      background: #dfdfdf;
     }
   }
 `;
@@ -217,7 +217,7 @@ export class ul_drop_down extends React.Component<Props, State> {
 StyledIcon = styled("div")`
 width: 20px;
 height: 20px;
-transition: 0.2s;
+transition: 0.1s;
 background-position: center; 
 background-repeat:no-repeat;
 background-size: 100% 100%;

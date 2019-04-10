@@ -1,6 +1,6 @@
 import * as React from "react";
 import { PropertyControls, ControlType, Frame, animate, FramerAnimation, PropertyStore, RenderTarget } from "framer";
-import { string } from "prop-types";
+import { string, array } from "prop-types";
 import styled from "styled-components";
 import { JSONArray } from "framer/types/src/render/types/JSONData";
 // import { State } from "framer/types/src/events/recognizer/GestureRecognizer";
@@ -9,8 +9,16 @@ import { JSONArray } from "framer/types/src/render/types/JSONData";
 // const StyledDropdown = styled.select`
 // const StyledDropdown = styled("div")`
 
+// const getDdExpandedHeight = () => {
+//   return (((this.props.listItemLineHeight + this.props.listItemMarginTopBottom) * this.props.numberOfListItems) + this.props.listItemMarginTopBottom)
+// }
+
 
 interface Props {
+  optionTitles: string;
+  separator: string;
+  optionTitleArray: string[];
+  optionArray: JSONArray;
   text: string;
   padding: number;
   paddingLeft: number;
@@ -23,13 +31,18 @@ interface Props {
   backgroundImage: string;
   width: number;
   height: number;
+  listItemLineHeight: number;
+  numberOfListItems: number;
+  listItemMarginTopBottom: number;
+  ddListExpandedHeight: number;
   // ddIconRotation: number;
 }
 
 interface State {
   listOpen: boolean,
-  location: JSONArray
+  // option: JSONArray
 }
+
 
 export class ul_drop_down extends React.Component<Props, State> {
   private selectRef: React.RefObject<HTMLSelectElement>;
@@ -37,7 +50,10 @@ export class ul_drop_down extends React.Component<Props, State> {
 
   // Set default properties
   static defaultProps = {
-    // text: "Hello World!",
+    title: 'Istanbul',
+    optionTitles: "London, New York, Dublin",
+    optionTitleArray: [],
+    separator: ",",
     color: "blue",
     padding: 16,
     paddingLeft: 16,
@@ -46,60 +62,46 @@ export class ul_drop_down extends React.Component<Props, State> {
     iconColor: "#dfdfdf",
     iconSize: 0.7,
     iconTop: 2,
+    listItemLineHeight: 24,
+    numberOfListItems: 7,
+    listItemMarginTopBottom: 8,
+    // ddListExpandedHeight: getDdExpandedHeight,
     // bgColor: "black",
     // selectedOption: location[0]
   };
 
-  // Items shown in property panel
-  static propertyControls: PropertyControls = {
-    text: { type: ControlType.String, title: "Text" }
-  };
+	// Items shown in property panel
+	static propertyControls: PropertyControls = {
+		options: {
+			type: ControlType.String,
+			title: 'Options',
+			defaultValue: 'London, New York, Dublin',
+		},
+	}
+
+// optionTitleArray = this.props.optionTitles.split(this.props.separator);
 
 
   state = {
     listOpen: false,
-    location: [
+    option: [
       {
         id: 0,
         title: 'London',
         selected: false,
-        key: 'location'
+        key: 'option'
       },
       {
           id: 1,
           title: 'New York',
           selected: false,
-          key: 'location'
+          key: 'option'
       },
       {
         id: 2,
         title: 'Dublin',
         selected: false,
-        key: 'location'
-      },
-      {
-        id: 3,
-        title: 'California',
-        selected: false,
-        key: 'location'
-      },
-      {
-        id: 4,
-        title: 'Istanbul',
-        selected: false,
-        key: 'location'
-      },
-      {
-        id: 5,
-        title: 'Izmir',
-        selected: false,
-        key: 'location'
-      },
-      {
-        id: 6,
-        title: 'Oslo',
-        selected: false,
-        key: 'location'
+        key: 'option'
       }
     ]
   }
@@ -107,6 +109,10 @@ export class ul_drop_down extends React.Component<Props, State> {
   toggleList = () => {
     const listOpen = !this.state.listOpen
     this.setState({ ...this.state, listOpen })
+  }
+
+  getDdExpandedHeight = () => {
+    return (((this.props.listItemLineHeight + this.props.listItemMarginTopBottom) * this.props.numberOfListItems) + this.props.listItemMarginTopBottom)
   }
 
   // multiSelectItem = (id, key) => {
@@ -120,6 +126,7 @@ export class ul_drop_down extends React.Component<Props, State> {
 
   //   this.setState(temp);
   // }
+
 
   selectItem = (id, key) => {
     let temp = {};
@@ -186,7 +193,8 @@ export class ul_drop_down extends React.Component<Props, State> {
 }
 .dd-list {
   z-index: 10;
-  height: auto;
+  /* height: auto; */
+  height: ${props => (((props.listItemLineHeight + props.listItemMarginTopBottom) * props.numberOfListItems) + props.listItemMarginTopBottom)};
   min-height: 100% !important;
   border: 1px solid #dfdfdf;
   /* border-top: none; */
@@ -201,7 +209,7 @@ export class ul_drop_down extends React.Component<Props, State> {
   list-style: none;
   padding: 16px 0;
   margin: 0 auto;
-  transition: 0.2s;
+  transition: height 0.4s ease;
 }
   .dd-list-item {
     font-size: 16px;
@@ -224,16 +232,19 @@ background-size: 100% 100%;
 `
 
   render() {
+    console.log("render called even when updating property controls in design screen");  
+    const dropDownHeightWhenExpanded = (((this.props.listItemLineHeight + this.props.listItemMarginTopBottom) * this.props.numberOfListItems) + this.props.listItemMarginTopBottom);
 
     return (
       <this.StyledDropdown
         style={{
           width: this.props.width,
+          
         }}
       >
         <div className="dd-wrapper">
           <div className="dd-header" onClick={() => this.toggleList()}>  
-              <div className="dd-header-title" >{this.getSelectedItem('location')}
+              <div className="dd-header-title" >{this.getSelectedItem('option')}
 
               </div>
               <this.StyledIcon
@@ -245,8 +256,13 @@ background-size: 100% 100%;
                 </this.StyledIcon>
           </div>
           {this.state.listOpen && 
-          <ul className="dd-list">
-          {this.state.location.map(item => (
+          <ul className="dd-list"
+          // style={{
+          // visibility: this.state.listOpen ? "visible" : "hidden",
+          // height: this.state.listOpen ? "300px" : "0px",      
+          // }}
+          >
+          {this.state.option.map(item => (
             <li className="dd-list-item" key={item.title} onClick={() => {
               this.selectItem(item.id, item.key);
               this.toggleList();

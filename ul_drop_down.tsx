@@ -3,6 +3,7 @@ import { PropertyControls, ControlType, Frame, animate, FramerAnimation, Propert
 import { string, array } from "prop-types";
 import styled from "styled-components";
 import { JSONArray } from "framer/types/src/render/types/JSONData";
+import { Props } from "./property controls";
 // import { State } from "framer/types/src/events/recognizer/GestureRecognizer";
 
 
@@ -72,7 +73,7 @@ export class ul_drop_down extends React.Component<Props, State> {
 
 	// Items shown in property panel
 	static propertyControls: PropertyControls = {
-		options: {
+		optionTitles: {
 			type: ControlType.String,
 			title: 'Options',
 			defaultValue: 'London, New York, Dublin',
@@ -113,6 +114,16 @@ export class ul_drop_down extends React.Component<Props, State> {
 
   getDdExpandedHeight = () => {
     return (((this.props.listItemLineHeight + this.props.listItemMarginTopBottom) * this.props.numberOfListItems) + this.props.listItemMarginTopBottom)
+  }
+
+
+
+  setOptionArray = () => {
+    const optionArray = this.props.optionTitles.split(","); 
+  }
+
+  updateStateOption = () => {
+
   }
 
   // multiSelectItem = (id, key) => {
@@ -161,7 +172,6 @@ export class ul_drop_down extends React.Component<Props, State> {
   border: solid 1px #DEDEDE;
   color: #212b38;
   font-size: 16px;
-
   .dd-wrapper {
     width: 100%;
   }
@@ -176,7 +186,6 @@ export class ul_drop_down extends React.Component<Props, State> {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
-
   border: 1px solid #dfdfdf;
   border-radius: 3px;
   cursor: default;

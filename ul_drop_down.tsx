@@ -25,6 +25,7 @@ interface Props {
   options: string[];
   placeholder: string;
   borderColor: string;
+  radius: number;
 }
 
 interface State {
@@ -47,6 +48,7 @@ export class ul_drop_down extends React.Component<Props, State> {
     listItemLineHeight: 24,
     listItemMarginTopBottom: 8,
     listBackgroundColor: "yellow",
+    radius: 8,
   };
 
   // Items shown in property panel
@@ -72,10 +74,21 @@ export class ul_drop_down extends React.Component<Props, State> {
       title: "Border Color",
       defaultValue: "#dfdfdf"
     },
-    chevronColor: {
+   radius: {
+      type: ControlType.Number,
+      title: "Radius",
+      min: 0,
+      max: 12,
+    },
+    iconColor: {
       type: ControlType.Color,
-      title: "Chevron Color",
+      title: "Icon Color",
       defaultValue: "#dfdfdf"
+    },
+    dropDownListHasBorder: {
+      type: ControlType.Boolean,
+      title: "Drop Down List Border",
+      defaultValue: false
     },
     listBackgroundColor: {
       type: ControlType.Color,
@@ -123,10 +136,9 @@ export class ul_drop_down extends React.Component<Props, State> {
     min-height: 100% !important;
     display: flex;
     justify-content: left;
-    border-radius: 2px;
-    border: solid 1px;
+    /* border: solid 1px; */
     font-size: 16px;
-    color: ${props => this.props.color};
+    color: ${props => props.color};
     .dd-wrapper {
       width: 100%;
     }
@@ -142,12 +154,17 @@ export class ul_drop_down extends React.Component<Props, State> {
       -ms-flex-pack: justify;
       justify-content: space-between;
       /* border: 1px solid; */
-      border-radius: 3px;
+      border: 1px solid ${props => props.borderColor};
+      border-radius: ${props => props.radius}px;
       cursor: default;
       position: relative;
       background-color: white;
       height: 100%;
       padding: 0 16px;
+      /* &:focus {
+        outline: none;
+        outline-color: #f0f;
+      } */
     }
     .dd-header span {
       margin-right: 20px;
@@ -158,10 +175,10 @@ export class ul_drop_down extends React.Component<Props, State> {
     .dd-list {
       z-index: 10;
       min-height: 100% !important;
-      border: 1px solid ${props => this.props.borderColor};
-      /* border: 1px solid; */
-      border-bottom-right-radius: 3px;
-      border-bottom-left-radius: 3px;
+      border-color: ${props => props.borderColor};
+      border-width: 1px;
+      border-style: ${props => props.dropDownListHasBorder ? 'solid' : 'none'};
+      border-top: none;
       -webkit-box-shadow: 0 2px 5px -1px #e8e8e8;
       box-shadow: 0 2px 5px -1px #e8e8e8;
       font-weight: 700;
@@ -171,7 +188,7 @@ export class ul_drop_down extends React.Component<Props, State> {
       padding: 16px 0;
       margin: 0 auto;
       transition: height 0.4s ease;
-      background-color: ${props => this.props.listBackgroundColor};
+      background-color: ${props => props.listBackgroundColor};
     }
     .dd-list-item {
       font-size: 16px;
@@ -179,7 +196,7 @@ export class ul_drop_down extends React.Component<Props, State> {
       padding: 0 16px;
       margin: 8px auto;
       &:hover {
-        background-color: ${props => this.props.listItemHoverColor};;
+        background-color: ${props => props.listItemHoverColor};
       }
     }
   `;
@@ -193,28 +210,6 @@ export class ul_drop_down extends React.Component<Props, State> {
     background-size: 100% 100%;
   `;
 
-  StyledList = styled("ul")`
-   z-index: 10;
-      /* height: ${props =>
-        (props.listItemLineHeight + props.listItemMarginTopBottom) *
-          props.num +
-        props.listItemMarginTopBottom}; */
-      min-height: 100% !important;
-      border: 1px solid;
-      border-color: ${props => props.borderColor};
-      border-bottom-right-radius: 3px;
-      border-bottom-left-radius: 3px;
-      -webkit-box-shadow: 0 2px 5px -1px #e8e8e8;
-      box-shadow: 0 2px 5px -1px #e8e8e8;
-      font-weight: 700;
-      overflow-y: scroll;
-      -webkit-overflow-scrolling: touch;
-      list-style: none;
-      padding: 16px 0;
-      margin: 0 auto;
-      transition: height 0.4s ease;
-  `
-
   render() {
 
     const dropDownHeightWhenExpanded =
@@ -226,12 +221,7 @@ export class ul_drop_down extends React.Component<Props, State> {
 
     return (
       <this.StyledDropdown
-        style={{
-          width: this.props.width,
-          color: this.props.color,
-          borderColor: this.props.borderColor,
-        }
-      }
+        {...this.props}
       >
         <div className="dd-wrapper">
           <div className="dd-header" onClick={() => this.toggleList()}>

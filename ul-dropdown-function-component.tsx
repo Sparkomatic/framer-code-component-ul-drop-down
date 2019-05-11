@@ -1,24 +1,7 @@
-// import * as React from "react"
-// import { Frame, useCycle } from "framer"
-
-// // Open Preview (CMD + P)
-// // API Reference: https://www.framer.com/api
-
-// export function Ul_dropdown() {
-//     const [twist, cycle] = useCycle(
-//         { scale: 0.5, rotate: 0 },
-//         { scale: 1, rotate: 90 }
-//     )
-
-//     return <Frame animate={twist} onTap={() => cycle()} size={"100%"} />
-// }
-
 import * as React from "react"
 import { useState, useEffect } from "react"
 import { Frame, addPropertyControls, ControlType } from "framer"
 import styled from "styled-components"
-// import { JSONArray } from "framer/types/src/render/types/JSONData"
-// import { Props } from "./property controls";
 
 interface Props {
     padding: number

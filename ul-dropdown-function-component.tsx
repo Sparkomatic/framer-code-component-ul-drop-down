@@ -128,10 +128,6 @@ export function Ul_dropdown(props) {
         listOpen === false ? setListOpen(true) : setListOpen(false)
     }
 
-    // const handleSelectItem = item => {
-    //     item == null ? setItem("place holder") : setItem(item)
-    // }
-
     // getDdExpandedHeight = () => {
     //   return (
     //     (this.props.listItemLineHeight + this.props.listItemMarginTopBottom) *
@@ -140,24 +136,12 @@ export function Ul_dropdown(props) {
     //   );
     // };
 
-    // selectItem = item => {
-    //     if (this.state.item) {
-    //         this.state.item = item
-    //     } else {
-    //         this.setState({ item: item })
-    //     }
-    // }
 
     // const dropDownHeightWhenExpanded =
     //     (this.props.listItemLineHeight +
     //         this.props.listItemMarginTopBottom) *
     //         this.props.options.length +
     //     this.props.listItemMarginTopBottom
-
-    // console.log(
-    //     "dropdown height when expanded is: ",
-    //     dropDownHeightWhenExpanded
-    // )
 
     return (
         <Frame size={"100%"}>

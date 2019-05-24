@@ -2,6 +2,7 @@ import * as React from "react"
 import { useState, useEffect } from "react"
 import { Frame, addPropertyControls, ControlType } from "framer"
 import styled from "styled-components"
+import "./fonts/fonts.css"
 
 interface Props {
     padding: number
@@ -21,6 +22,7 @@ interface Props {
     listItemHoverColor: string
     ddListExpandedHeight: number
     options: string[]
+    customFontFamily: string
     placeholder: string
     borderColor: string
     radius: number
@@ -72,6 +74,8 @@ const StyledDropdown = styled("div")`
     }
     .dd-header-title {
       font-weight: 300;
+    //   font-family: ${props => props.font};
+      font-family: ${props => props.customFontFamily};
     }
     .dd-list {
       z-index: 10;
@@ -84,6 +88,7 @@ const StyledDropdown = styled("div")`
       -webkit-box-shadow: 0 2px 5px -1px #e8e8e8;
       box-shadow: 0 2px 5px -1px #e8e8e8;
       font-weight: 700;
+      font-family: ${props => props.customFontFamily};
       overflow-y: scroll;
       -webkit-overflow-scrolling: touch;
       list-style: none;
@@ -136,7 +141,6 @@ export function Ul_dropdown(props) {
     //   );
     // };
 
-
     // const dropDownHeightWhenExpanded =
     //     (this.props.listItemLineHeight +
     //         this.props.listItemMarginTopBottom) *
@@ -169,10 +173,6 @@ export function Ul_dropdown(props) {
                                 <li
                                     className="dd-list-item"
                                     key={index}
-                                    // onClick={() => {
-                                    //     setItem(item)
-                                    //     handleToggleList
-                                    // }}
                                     onClick={() => {
                                         handleToggleList()
                                         setItem(item)
@@ -253,5 +253,10 @@ addPropertyControls(Ul_dropdown, {
         type: ControlType.Color,
         title: "List Item Hover Color",
         defaultValue: "#dfdfdf",
+    },
+    customFontFamily: {
+        type: ControlType.String,
+        title: "Fontstack",
+        defaultValue: "Montserrat",
     },
 })
